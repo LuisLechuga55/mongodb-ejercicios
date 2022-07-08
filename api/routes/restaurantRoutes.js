@@ -7,6 +7,6 @@ router.get('/restaurants', restaurantController.getAllRestaurants);
 
 router.get('/fiveRestaurants', restaurantController.getFiveRestaurants);
 
-router.get('/especificRestaurants', restaurantController.getSpecificRestaurants);
+router.get('/6to10Restaurants', restaurantController.getSpecificRestaurants);
 
 export default router;
