@@ -19,4 +19,6 @@ router.get('/firstWithoutId', restaurantController.firstWithoutId);
 
 router.get('/onlyNamesRestaurants', restaurantController.onlyNamesRestaurants);
 
+router.get('/onlyAmericanRestaurantsA', restaurantController.onlyAmericanRestaurantsA);
+
 export default router;

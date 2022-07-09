@@ -105,7 +105,7 @@ const getRestaurantAmericanGreater70 = async (req, res) => {
       },
     });
     return res.json({
-      msg: 'Restaurantes Americanos',
+      msg: 'Restaurantes Americanos con un grado mayor a 70',
       data: restaurants,
     });
   } catch (error) {
@@ -120,7 +120,7 @@ const firstWithoutId = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({}, {_id: 0}).limit(1);
     return res.json({
-      msg: 'Restaurantes Americanos',
+      msg: 'Restaurante sin ID',
       data: restaurants,
     });
   } catch (error) {
@@ -135,7 +135,7 @@ const onlyNamesRestaurants = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({}, {name: 1, _id: 0});
     return res.json({
-      msg: 'Restaurantes Americanos',
+      msg: 'Solo los nombres de Resaturantes',
       data: restaurants.map((restaurant) => {
         return restaurant.name
       }),
@@ -148,6 +148,34 @@ const onlyNamesRestaurants = async (req, res) => {
   }
 };
 
+const onlyAmericanRestaurantsA = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      cuisine: 'American ',
+      grades: {
+        $elemMatch: {
+          grade: {
+            $in: 'A',
+          },
+        },
+      },
+      borough: {
+        $nin: 'Brooklyn',
+      },
+    });
+    return res.json({
+      msg: 'Restaurantes Americanos con un grado mayor a 70',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los Restaurantes',
+      error,
+    });
+  }
+};
+
+
 export {
   getAllRestaurants,
   getFiveRestaurants,
@@ -156,5 +184,6 @@ export {
   getScoreGreater90Lower100,
   getRestaurantAmericanGreater70,
   firstWithoutId,
-  onlyNamesRestaurants
+  onlyNamesRestaurants,
+  onlyAmericanRestaurantsA
 }
