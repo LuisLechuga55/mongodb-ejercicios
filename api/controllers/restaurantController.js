@@ -282,14 +282,31 @@ const allRestaurantsDateGradeAScoreEleven = async (req, res) => {
   }
 };
 
-/**
- * 
-
-Ejercicio 15.-
+/* Ejercicio 15.-
 Todos los nombres de los restaurantes ordenados
-alfabéticamente
+alfabéticamente */
+
+const getRestaurantsAlphabetic = async (req, res) => {
+ try {
+  const restaurants = await Restaurant.find({}, {name: 1, _id: 0}).sort({name: 1});
+  return res.json({
+    msg: 'Todos los restaurantes ordenados alfabeticamente',
+    data: restaurants.map((restaurant) => {
+      return restaurant.name
+    }),
+  });
+  
+ } catch (error) {
+  return res.status(500).json({
+    msg: 'Error al encontrar los restaurantes',
+    error,
+  });
+ }
+};
 
 
+/**
+ *
 Ejercicio 16.-
 Todos los restaurantes que tengan dirección
 
@@ -315,4 +332,5 @@ export {
   getRestaurantsStateIslandQueensBronxor,
   getRestaurantsNotAmericanChinese,
   allRestaurantsDateGradeAScoreEleven,
+  getRestaurantsAlphabetic
 }
