@@ -253,10 +253,6 @@ const getRestaurantsNotAmericanChinese = async (req, res) => {
   }
 };
 
-/* Ejercicio 14.-
-Todos los restaurantes que el día 11-08-2014 hayan
-tenido una calificación de A y un puntaje de 11 */
-
 const allRestaurantsDateGradeAScoreEleven = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({
