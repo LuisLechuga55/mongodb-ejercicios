@@ -175,6 +175,89 @@ const onlyAmericanRestaurantsA = async (req, res) => {
   }
 };
 
+const onlyRestaurantsWil = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      name: /Wil/,
+    });
+    return res.json({
+      msg: 'Encontrado los Restaurantes que empiezan con Wil',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los restaurantes',
+      error,
+    })
+  }
+};
+
+/* Ejercicio 11.-
+Todos los restaurantes de Bronx que tengan comida Americana
+o China */
+
+const allRestaurantsInBronxAmericanChinese = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      borough: 'Bronx',
+      $or: [{ cuisine: { $in: 'American ' } }, { cuisine: { $in: 'Chinese' } }],
+    });
+    return res.json({
+      msg: 'Todos los Restaurantes en Bronx de comida americana o China ',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los Restaurantes',
+      error,
+    });
+  }
+};
+
+/**
+ * 
+Ejercicio 9.-
+Todos los restaurantes que sean de cocina 'American '
+con al menos un graode  'A' y que no sean de la ciudad Brooklyn
+
+*
+Ejercicio 10.-
+Todos los restaurantes que su nombre empiece con 'Wil'
+
+
+Ejercicio 11.-
+Todos los restaurantes de Bronx que tengan comida Americana
+o China
+
+
+Ejercicio 12.-
+Todos los restaurantes de Staten Island o Queens
+o Bronxor Brooklyn.
+
+
+Ejercicio 13.- Todos los restaurantes que no tengan comida
+americana ni china
+
+
+Ejercicio 14.-
+Todos los restaurantes que el día 11-08-2014 hayan
+tenido una calificación de A y un puntaje de 11
+
+
+Ejercicio 15.-
+Todos los nombres de los restaurantes ordenados
+alfabéticamente
+
+
+Ejercicio 16.-
+Todos los restaurantes que tengan dirección
+
+
+Ejercicio 17.-
+Los 10 mejores restaurantes ordenados por el promedio de
+sus puntajes (score)
+ */
+
 
 export {
   getAllRestaurants,
@@ -185,5 +268,7 @@ export {
   getRestaurantAmericanGreater70,
   firstWithoutId,
   onlyNamesRestaurants,
-  onlyAmericanRestaurantsA
+  onlyAmericanRestaurantsA,
+  onlyRestaurantsWil,
+  allRestaurantsInBronxAmericanChinese
 }

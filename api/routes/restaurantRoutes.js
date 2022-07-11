@@ -21,4 +21,9 @@ router.get('/onlyNamesRestaurants', restaurantController.onlyNamesRestaurants);
 
 router.get('/onlyAmericanRestaurantsA', restaurantController.onlyAmericanRestaurantsA);
 
+router.get('/onlyRestaurantsWil', restaurantController.onlyRestaurantsWil);
+
+router.get('/allRestaurantsInBronxAmericanChinese', restaurantController.allRestaurantsInBronxAmericanChinese);
+
+
 export default router;
