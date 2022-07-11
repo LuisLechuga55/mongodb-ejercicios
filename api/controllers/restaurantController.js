@@ -282,10 +282,6 @@ const allRestaurantsDateGradeAScoreEleven = async (req, res) => {
   }
 };
 
-/* Ejercicio 15.-
-Todos los nombres de los restaurantes ordenados
-alfabéticamente */
-
 const getRestaurantsAlphabetic = async (req, res) => {
  try {
   const restaurants = await Restaurant.find({}, {name: 1, _id: 0}).sort({name: 1});
@@ -304,17 +300,48 @@ const getRestaurantsAlphabetic = async (req, res) => {
  }
 };
 
+const allRestaurantsAddress = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({}, {address: 1, _id: 0})
+    return res.json({
+      msg: 'Todas las direcciones de los Restaurantes',
+      data: restaurants.map((restaurant) => {
+        return restaurant.address.street
+      })
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los Restaurantes',
+      error,
+    })
+  }
+};
 
-/**
- *
-Ejercicio 16.-
-Todos los restaurantes que tengan dirección
+const bestTenRestaurantsScore = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.aggregate(
+      [
+        {
+          $group: {
+            _id: '$name',
+            grades: { $avg: '$score' }
+          },
+        },
+      ],
+  );
+    return res.json({
+      msg: 'Encontrado los 10 mejores Restaurantes por su Score',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los 10 mejores Restaurantes',
+      error,
+    });
+  }
+};
 
 
-Ejercicio 17.-
-Los 10 mejores restaurantes ordenados por el promedio de
-sus puntajes (score)
- */
 
 
 export {
@@ -332,5 +359,7 @@ export {
   getRestaurantsStateIslandQueensBronxor,
   getRestaurantsNotAmericanChinese,
   allRestaurantsDateGradeAScoreEleven,
-  getRestaurantsAlphabetic
+  getRestaurantsAlphabetic,
+  allRestaurantsAddress,
+  bestTenRestaurantsScore,
 }

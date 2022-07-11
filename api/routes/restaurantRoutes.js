@@ -33,5 +33,9 @@ router.get('/allRestaurantsDateGradeAScoreEleven', restaurantController.allResta
 
 router.get('/getRestaurantsAlphabetic', restaurantController.getRestaurantsAlphabetic);
 
+router.get('/allRestaurantsAddress', restaurantController.allRestaurantsAddress);
+
+router.get('/bestTenRestaurantsScore', restaurantController.bestTenRestaurantsScore);
+
 
 export default router;
