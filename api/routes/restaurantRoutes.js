@@ -25,5 +25,9 @@ router.get('/onlyRestaurantsWil', restaurantController.onlyRestaurantsWil);
 
 router.get('/allRestaurantsInBronxAmericanChinese', restaurantController.allRestaurantsInBronxAmericanChinese);
 
+router.get('/getRestaurantsNotAmericanChinese', restaurantController.getRestaurantsNotAmericanChinese);
+
+router.get('/allRestaurantsDateGradeAScoreEleven', restaurantController.allRestaurantsDateGradeAScoreEleven);
+
 
 export default router;

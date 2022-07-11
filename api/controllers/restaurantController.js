@@ -192,10 +192,6 @@ const onlyRestaurantsWil = async (req, res) => {
   }
 };
 
-/* Ejercicio 11.-
-Todos los restaurantes de Bronx que tengan comida Americana
-o China */
-
 const allRestaurantsInBronxAmericanChinese = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({
@@ -214,35 +210,84 @@ const allRestaurantsInBronxAmericanChinese = async (req, res) => {
   }
 };
 
+const getRestaurantsStateIslandQueensBronxor = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      $or: [
+        { borough: { $in: 'Staten Island'} },
+        { borough: { $in: 'Queens'}},
+        { borough: { $in: 'Brooklyn'}},
+        { borough: { $in: 'Bronx'}},
+      ],
+    });
+    return res.json({
+      msg: 'Todos los restaurantes de Staten Island, Queens, Bronx o Brooklyn',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los restaurantes',
+      error,
+    });
+    
+  }
+};
+
+const getRestaurantsNotAmericanChinese = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      $and: [
+        { cuisine: { $nin: 'American '} },
+        { cuisine: { $nin: 'Chinese'}},
+      ],
+    });
+    return res.json({
+      msg: 'Todos los restaurantes que no incluyan comida Americana o China',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los restaurantes',
+      error,
+    });
+  }
+};
+
+/* Ejercicio 14.-
+Todos los restaurantes que el día 11-08-2014 hayan
+tenido una calificación de A y un puntaje de 11 */
+
+const allRestaurantsDateGradeAScoreEleven = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({
+      grades: {
+        $elemMatch: {
+          date: {
+            $in: '2014-08-11',
+          },
+          grade: {
+            $in: 'A',
+          },
+          Score: {
+            $in: 11
+          },
+        },
+      },
+    });
+    return res.json({
+      msg: 'Todos los restaurantes del dia 11-08-2014 con Grado A y Score 11',
+      data: restaurants,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Error al encontrar los restaurantes',
+      error,
+    });
+  }
+};
+
 /**
  * 
-Ejercicio 9.-
-Todos los restaurantes que sean de cocina 'American '
-con al menos un graode  'A' y que no sean de la ciudad Brooklyn
-
-*
-Ejercicio 10.-
-Todos los restaurantes que su nombre empiece con 'Wil'
-
-
-Ejercicio 11.-
-Todos los restaurantes de Bronx que tengan comida Americana
-o China
-
-
-Ejercicio 12.-
-Todos los restaurantes de Staten Island o Queens
-o Bronxor Brooklyn.
-
-
-Ejercicio 13.- Todos los restaurantes que no tengan comida
-americana ni china
-
-
-Ejercicio 14.-
-Todos los restaurantes que el día 11-08-2014 hayan
-tenido una calificación de A y un puntaje de 11
-
 
 Ejercicio 15.-
 Todos los nombres de los restaurantes ordenados
@@ -270,5 +315,8 @@ export {
   onlyNamesRestaurants,
   onlyAmericanRestaurantsA,
   onlyRestaurantsWil,
-  allRestaurantsInBronxAmericanChinese
+  allRestaurantsInBronxAmericanChinese,
+  getRestaurantsStateIslandQueensBronxor,
+  getRestaurantsNotAmericanChinese,
+  allRestaurantsDateGradeAScoreEleven,
 }
